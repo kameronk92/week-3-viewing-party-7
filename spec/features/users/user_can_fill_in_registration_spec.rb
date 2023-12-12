@@ -14,7 +14,7 @@ RSpec.describe "User Registration" do
     expect(page).to have_content("User One's Dashboard")
   end 
 
-  it 'does not create a user if email isnt unique' do 
+  it "does not create a user if passwords don't match" do 
     User.create(name: 'User One', email: 'notunique@example.com', password: 'hidrnick', password_confirmation: 'hidrnick')
 
     visit register_path
