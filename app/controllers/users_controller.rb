@@ -1,6 +1,6 @@
 class UsersController <ApplicationController 
   def new 
-    @user = User.new()
+    @user = User.new
   end 
 
   def show 
@@ -10,6 +10,7 @@ class UsersController <ApplicationController
   def create 
     user = User.create(user_params)
     if user.save
+      flash[:success] = "User was successfully created."
       redirect_to user_path(user)
     else  
       flash[:error] = user.errors.full_messages.to_sentence
@@ -17,9 +18,20 @@ class UsersController <ApplicationController
     end 
   end 
 
+  def login
+    user = User.find_by(name: params[:name])
+    if user.authenticate(params[:password])
+      flash[:success] = "Hi, #{user.name}!"
+      redirect_to root_path
+    else
+      flash[:error] = "Sorry, your credentials are bad, and you should feel bad."
+      render :login_form
+    end
+  end
+
   private 
 
   def user_params 
-    params.require(:user).permit(:name, :email)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end 
 end 
