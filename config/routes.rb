@@ -13,4 +13,11 @@ Rails.application.routes.draw do
 
   get "/login", to: "users#login_form"
   post "/login", to: "users#login"
+
+  post "/logout", to: "users#logout", as: "logout"
+
+  # namespace :admin do
+    get '/dashboard', to: 'dashboard#index'
+    # resources :users, only: [:index, :show]
+  # end
 end
